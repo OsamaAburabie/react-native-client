@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import Button from "../components/Button";
 import { AuthenticatedUserContext } from "../providers";
 
-const HomeScreen = ({ navigation }) => {
+const ProfileScreen = ({ navigation }) => {
   const { user, token, logout } = useContext(AuthenticatedUserContext);
 
   return (
@@ -15,4 +15,4 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 
-export default HomeScreen;
+export default ProfileScreen;

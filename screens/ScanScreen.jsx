@@ -1,18 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Text, View, StyleSheet, Button } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import ScanPopup from "../components/ScanPopup";
 import mongoose from "mongoose";
-
+import { AuthenticatedUserContext } from "../providers";
+import axios from "../config/axios";
 export default function ScanScreen() {
+  const { token } = useContext(AuthenticatedUserContext);
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
-  const [data, setData] = useState("");
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
     setScanned(false);
-    setData("");
+    setData(null);
+    setError(null);
   };
 
   const askForCameraPermission = () => {
@@ -27,13 +31,31 @@ export default function ScanScreen() {
     setScanned(false);
   }, []);
 
+  const fetchData = async (id) => {
+    try {
+      setScanned(true);
+      const res = await axios.get(`/api/guard/scan/${id}`, {
+        headers: { "x-auth-token": token },
+      });
+      if (res.data.success) {
+        setData(res.data);
+        setModalVisible(true);
+      }
+    } catch (err) {
+      // console.log(err.response.data.message);
+      // setScanned(false);
+      if (err.response.data.message) {
+        setError(err.response.data.message);
+        setModalVisible(true);
+      }
+    }
+  };
+
   const handleBarCodeScanned = ({ type, data }) => {
     const ObjectId = mongoose.Types.ObjectId;
     //check if scanned data is valid
-    if (ObjectId.isValid(data)) {
-      setScanned(true);
-      setModalVisible(true);
-      setData(data);
+    if (ObjectId.isValid(data) && !scanned) {
+      fetchData(data);
     }
   };
 
@@ -62,16 +84,14 @@ export default function ScanScreen() {
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
-      {/* {scanned && (
-        <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
-      )} */}
+
       <ScanPopup
         isModalVisible={isModalVisible}
         setModalVisible={setModalVisible}
         toggleModal={toggleModal}
         data={data}
+        error={error}
       />
-      {/* <Button title="Show modal" onPress={toggleModal} /> */}
     </View>
   );
 }
@@ -79,7 +99,6 @@ export default function ScanScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
   },

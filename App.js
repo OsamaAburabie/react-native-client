@@ -1,3 +1,4 @@
+import React from "react";
 import { RootNavigator } from "./navigation";
 import axios from "axios";
 import { AuthenticatedUserProvider } from "./providers";

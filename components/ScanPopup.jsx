@@ -8,10 +8,11 @@ function ScanPopup({ isModalVisible, toggleModal, data, error }) {
   };
   return (
     <Modal
-      animationIn="zoomIn"
-      animationOut="zoomOut"
+      animationIn="slideInUp"
+      animationOut="slideOutDown"
       isVisible={isModalVisible}
       onBackdropPress={() => handleClost()}
+      backdropOpacity={0.3}
     >
       <View
         style={{
@@ -28,7 +29,7 @@ function ScanPopup({ isModalVisible, toggleModal, data, error }) {
         )}
 
         {error && <Text style={{ color: "red" }}>{error}</Text>}
-        <Button title="Close" onPress={handleClost} />
+        {/* <Button title="Close" onPress={handleClost} /> */}
       </View>
     </Modal>
   );

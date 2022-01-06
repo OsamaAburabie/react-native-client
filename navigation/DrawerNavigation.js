@@ -11,15 +11,18 @@ const Drawer = createDrawerNavigator();
 const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
-      screenOptions={({ route, navigation }) => ({
-        headerTitle: route.name,
-        headerRight: () => (
-          <HeaderAvatar onPress={() => navigation.navigate("Profile")} />
-        ),
-      })}
+      screenOptions={{
+        headerShown: false,
+      }}
     >
-      <Drawer.Screen name="Home" component={BottomTabNavigator} />
-      <Drawer.Screen name="Profile" component={ProfileStackNavigator} />
+      {/* <Drawer.Screen name="Home" component={BottomTabNavigator} /> */}
+      <Drawer.Screen
+        options={{
+          drawerLabel: "Home",
+        }}
+        name="HomeDrawer"
+        component={BottomTabNavigator}
+      />
     </Drawer.Navigator>
   );
 };

@@ -84,7 +84,10 @@ export default function ScanScreen() {
     <View style={styles.container}>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
+        style={[
+          StyleSheet.absoluteFillObject,
+          { backgroundColor: "#333", margin: 0 },
+        ]}
       />
 
       <ScanPopup

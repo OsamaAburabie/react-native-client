@@ -14,9 +14,11 @@ export default function ScanScreen() {
   const [error, setError] = useState(null);
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
-    setScanned(false);
-    setData(null);
-    setError(null);
+    setTimeout(() => {
+      setScanned(false);
+      setData(null);
+      setError(null);
+    }, 300);
   };
 
   const askForCameraPermission = () => {

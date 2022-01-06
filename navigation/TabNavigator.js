@@ -3,29 +3,28 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { HomeScreen, ProfileScreen, QrView, ScanScreen } from "../screens";
 import { AuthenticatedUserContext } from "../providers";
 import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { ProfileStackNavigator } from "./stackNavigator";
 
 const Tab = createBottomTabNavigator();
 
-function Landing() {
+function BottomTabNavigator() {
   const { user } = useContext(AuthenticatedUserContext);
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
+        headerShown: false,
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === "Home") {
-            iconName = focused ? "home" : "home-outline";
-          } else if (route.name === "Profile") {
-            iconName = focused ? "profile" : "profile";
+          if (route.name === "Profile") {
+            iconName = focused ? "user-alt" : "user";
           } else if (route.name === "QR") {
             iconName = focused ? "qrcode" : "qrcode";
           } else if (route.name === "Scan") {
             iconName = focused ? "qrcode" : "qrcode";
           }
-
-          // You can return any component that you like here!
-          return <AntDesign name={iconName} size={size} color={color} />;
+          return <FontAwesome5 name={iconName} size={size} color={color} />;
         },
       })}
     >
@@ -33,9 +32,9 @@ function Landing() {
       {user.role === "guard" && (
         <Tab.Screen name="Scan" component={ScanScreen} />
       )}
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="Profile" component={ProfileStackNavigator} />
     </Tab.Navigator>
   );
 }
 
-export default Landing;
+export default BottomTabNavigator;

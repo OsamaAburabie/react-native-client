@@ -7,12 +7,7 @@ const DrawerIcon = ({ onPress }) => {
   return (
     <View>
       <TouchableOpacity onPress={onPress}>
-        <FontAwesome
-          style={{ marginRight: 10 }}
-          name="align-justify"
-          size={24}
-          color="black"
-        />
+        <FontAwesome name="align-justify" size={24} color="black" />
       </TouchableOpacity>
     </View>
   );

@@ -18,7 +18,7 @@ export default function ScanScreen() {
       setScanned(false);
       setData(null);
       setError(null);
-    }, 300);
+    }, 200);
   };
 
   const askForCameraPermission = () => {
@@ -86,7 +86,7 @@ export default function ScanScreen() {
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={[
           StyleSheet.absoluteFillObject,
-          { backgroundColor: "#333", margin: 0 },
+          { backgroundColor: "#fff", margin: 0 },
         ]}
       />
 

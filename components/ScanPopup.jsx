@@ -8,11 +8,11 @@ function ScanPopup({ isModalVisible, toggleModal, data, error }) {
   };
   return (
     <Modal
-      animationIn="slideInUp"
-      animationOut="slideOutDown"
+      animationIn="bounceIn"
+      animationOut="bounceOut"
       isVisible={isModalVisible}
       onBackdropPress={() => handleClost()}
-      backdropOpacity={0.1}
+      backdropOpacity={0.2}
     >
       <View
         style={{
